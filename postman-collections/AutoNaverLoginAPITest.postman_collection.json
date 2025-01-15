@@ -1,0 +1,281 @@
+{
+	"info": {
+		"_postman_id": "4c74a4c0-8991-4f75-b5bc-a51cd8657cca",
+		"name": "AutoNaverLoginAPITest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40705622"
+	},
+	"item": [
+		{
+			"name": "Get Access Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"let jsonData = pm.response.json();\r",
+							"pm.environment.set(\"access_token\", jsonData.access_token);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "authorization_code",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{client_id}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "z2NmDE5qBo",
+							"type": "text"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "http://localhost/callback",
+							"type": "text"
+						},
+						{
+							"key": "code",
+							"value": "{{authorization_code}}",
+							"type": "text"
+						},
+						{
+							"key": "state",
+							"value": "123abc",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://nid.naver.com/oauth2.0/token",
+					"protocol": "https",
+					"host": [
+						"nid",
+						"naver",
+						"com"
+					],
+					"path": [
+						"oauth2.0",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Refresh Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"let jsonData = pm.response.json();\r",
+							"pm.environment.set(\"access_token\", jsonData.access_token);\r",
+							"pm.environment.set(\"refresh_token\", jsonData.refresh_token);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "refresh_token",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "hBCuW3k9ZjS_l1wEueW9",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "z2NmDE5qBo",
+							"type": "text"
+						},
+						{
+							"key": "refresh_token",
+							"value": "eZ7Ls6xl39Pan0zI58GMisTjipDtGnrF92K1ipE5HPyqCfBiiJyZWlwq20r4JWjrfIdcXrOFTsvIiiAipaEH9rY7ZE2Y8fLXB6Z55L9QkZgDmeSrOOrJZkm08vebxvz5EVbipjr",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://nid.naver.com/oauth2.0/token",
+					"protocol": "https",
+					"host": [
+						"nid",
+						"naver",
+						"com"
+					],
+					"path": [
+						"oauth2.0",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auto Refresh",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"let jsonData = pm.response.json();\r",
+							"pm.environment.set(\"access_token\", jsonData.access_token);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "refresh_token",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{client_id}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{client_secret}}",
+							"type": "text"
+						},
+						{
+							"key": "refresh_token",
+							"value": "{{refresh_token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://nid.naver.com/oauth2.0/token",
+					"protocol": "https",
+					"host": [
+						"nid",
+						"naver",
+						"com"
+					],
+					"path": [
+						"oauth2.0",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains user data\", function () {\r",
+							"    let jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.response).to.have.property(\"id\");\r",
+							"    pm.expect(jsonData.response).to.have.property(\"email\");\r",
+							"    pm.expect(jsonData.response).to.have.property(\"name\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://openapi.naver.com/v1/nid/me",
+					"protocol": "https",
+					"host": [
+						"openapi",
+						"naver",
+						"com"
+					],
+					"path": [
+						"v1",
+						"nid",
+						"me"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
