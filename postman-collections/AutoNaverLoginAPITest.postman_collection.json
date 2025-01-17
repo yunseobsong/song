@@ -16,12 +16,26 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
+							"\r",
 							"let jsonData = pm.response.json();\r",
-							"pm.environment.set(\"access_token\", jsonData.access_token);\r",
+							"console.log(jsonData);\r",
+							"\r",
+							"if (jsonData.access_token) {\r",
+							"    pm.environment.set(\"access_token\", jsonData.access_token);\r",
+							"} else {\r",
+							"    console.error(\"Access Token이 응답에 포함되지 않았습니다.\");\r",
+							"}\r",
 							""
 						],
 						"type": "text/javascript",
 						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
 					}
 				}
 			],
